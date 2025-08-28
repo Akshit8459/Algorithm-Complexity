@@ -1,0 +1,49 @@
+CXX = g++
+CXXFLAGS = -std=c++11 -Wall
+
+# List all target executables
+TARGETS = ques1 ques2 ques3 ques4 ques5 ques6 ques7 ques8 ques9 ques10a ques10b ques11
+
+all: $(TARGETS)
+
+# Rule for each executable
+ques1: ques1.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+ques2: ques2.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+ques3: ques3.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+ques4: ques4.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+ques5: ques5.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+ques6: ques6.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+ques7: ques7.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+ques8: ques8.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+ques9: ques9.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+ques10a: ques10a.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+ques10b: ques10b.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+ques11: ques11.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+clean:
+	rm -f $(TARGETS)
+
+.PHONY: all clean
