@@ -116,7 +116,7 @@ int main(){
 
     cout<<"Sum of the above two number in the same format:";
     Node* addedList=adder(listA,listB);
-    printList(addedList);
+    printList(addedList->next);
     
     cout<<endl<<"Product of the above two number is:";
     Node* prodList=multiplyLists(listA,listB);

@@ -1,60 +1,84 @@
-#include<iostream>
-#include<vector>
+#include <bits/stdc++.h>
 using namespace std;
 
-void printboard(vector<vector<int>> board){
-    for(auto it:board){
-        for(auto box:it){
-            cout<<box<<" ";
-        }
-        cout<<endl;
-    }
-}
+int isSafe(vector<vector<int>>& mat, int row, int col) {
+    int n = mat.size();
+    int i, j;
 
-bool isSafe(vector<vector<int>> &board,int row,int col){
-    int n=board.size();
-    int i,j;
-    for(int i=0;i<8;i++){
-        if(board[i][col]==1){
-            return false;
-        }
-    }
+    // Check this col on upper side
+    for (i = 0; i < row; i++)
+        if (mat[i][col])
+            return 0;
 
     // Check upper diagonal on left side
-    for (i = row-1, j = col-1; i >= 0 && 
-         j >= 0; i--, j--)
-        if (board[i][j])
-            return false;
+    for (i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--)
+        if (mat[i][j])
+            return 0;
 
-    // Check lower diagonal on left side
-    for (i = row-1, j = col+1; j < n && 
-         i >= 0; i--, j++){
-             if (board[i][j])return false;
-         }
-    return true;
+    // Check upper diagonal on right side
+    for (i = row - 1, j = col + 1; j < n && i >= 0; i--, j++)
+        if (mat[i][j])
+            return 0;
+
+    return 1;
 }
 
-bool placeQueens(vector<vector<int>> &board,int row){
-    int n=board.size();
-    if(n==row){
-        return true;
-    }
-    for(int i=0;i<n;i++){
-        if(isSafe(board,row,i)){
-            board[row][i]=1;
-            if(placeQueens(board,row+1)){
-                return true;
-            }
-            board[row][i]=0;
+int placeQueens(int row, vector<vector<int>>& mat) {
+    int n = mat.size();
+
+    if (row == n) return 1;
+
+    for (int i = 0; i < n; i++) {
+        if (isSafe(mat, row, i)) {
+            mat[row][i] = 1;
+            if (placeQueens(row + 1, mat))
+                return 1;
+            mat[row][i] = 0;
         }
     }
-    return false;
+    return 0;
 }
 
-int main(){
-    vector<vector<int>> board(8,vector<int>(8,0));
-    cout<<"After Placing Queens"<<endl;
-    placeQueens(board,0);
-    printboard(board);
+vector<int> nQueen(int n, vector<vector<int>>& mat) {
+    if (placeQueens(0, mat)) {
+        vector<int> ans;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (mat[i][j]) {
+                    ans.push_back(j + 1);
+                }
+            }
+        }
+        return ans;
+    } else return {-1};
+}
+
+void printBoard(vector<vector<int>>& mat) {
+    int n = mat.size();
+    cout << "\nChessboard Solution:\n";
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (mat[i][j] == 1)
+                cout << " Q ";
+            else
+                cout << " . ";
+        }
+        cout << "\n";
+    }
+}
+
+int main() {
+    cout << "Enter value of N: ";
+    int n;
+    cin >> n;
+
+    vector<vector<int>> mat(n, vector<int>(n, 0));
+    vector<int> ans = nQueen(n, mat);
+
+    cout << "\nQueen positions (1-based col index): ";
+    for (auto i : ans) cout << i << " ";
+
+    printBoard(mat);
+
     return 0;
 }

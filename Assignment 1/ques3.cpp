@@ -1,35 +1,29 @@
-#include <iostream>
-#include<vector>
+#include <bits/stdc++.h>
 using namespace std;
 
-void greyCode(int n,string &code,vector<string> &arr){
-    if(n==0){
-        arr.push_back(code);
-        return;
+vector<string> generateGray(int n) {
+    if (n == 1) {
+        return {"0", "1"};
     }
-    code.push_back('0');
-    greyCode(n-1,code,arr);
-
-    code.pop_back();
-    code.push_back('1');
-    greyCode(n-1,code,arr);
-    code.pop_back();
+    vector<string> prev = generateGray(n - 1);
+    vector<string> result;
+    for (int i = 0; i < prev.size(); i++) {
+        result.push_back("0" + prev[i]);
+    }
+    for (int i = prev.size() - 1; i >= 0; i--) {
+        result.push_back("1" + prev[i]);
+    }
+    return result;
 }
 
-int main(){
-    string code;
+int main() {
     int n;
-    cout<<"Enter number of bits:";
-    cin>>n;
-    vector<string> arr;
-    greyCode(n,code,arr);
-    int size=arr.size();
-    for(int i=0;i<size/2;i++){
-        cout<<arr[i]<<", ";
+    cout << "Enter n: ";
+    cin >> n;
+    vector<string> grayCodes = generateGray(n);
+    cout << "Gray code of length " << n << ":\n";
+    for (auto &code : grayCodes) {
+        cout << code << "\n";
     }
-    for(int i=size-1;i>=size/2;i--){
-        cout<<arr[i]<<", ";
-    }
-
     return 0;
 }
